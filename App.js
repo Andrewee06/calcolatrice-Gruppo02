@@ -37,9 +37,29 @@ export default function App() {
             <View style={styles.buttons}>
                 <View style={styles.row}>
                     <CalculatorButton label="C" onPress={() => handlePress('C')} />
-                    <CalculatorButton label="M+" onPress={() => { }} />
-                    <CalculatorButton label="M-" onPress={() => { }} />
-                    <CalculatorButton label="RM" onPress={() => { }} />
+                    <CalculatorButton label="M+" onPress={() => {
+                        try {
+                            const result = eval(display);
+                            if (!isNaN(result)) {
+                                setMemory(memory + result);
+                            }
+                        } catch (error) {
+                            // Errore nel calcolo: non fare nulla
+                        }
+                    }} />
+                    <CalculatorButton label="M-" onPress={() => {
+                        try {
+                            const result = eval(display);
+                            if (!isNaN(result)) {
+                                setMemory(memory - result);
+                            }
+                        } catch (error) {
+                            // Errore nel calcolo: non fare nulla
+                        }
+                    }} />
+                    <CalculatorButton label="RM" onPress={() => {
+                        setDisplay(memory.toString());
+                    }} />
                 </View>
                 <View style={styles.row}>
                     <CalculatorButton label="1" onPress={() => handlePress('1')} />
