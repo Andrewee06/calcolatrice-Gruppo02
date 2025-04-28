@@ -25,8 +25,11 @@ export default function App() {
             setDisplay('');
             setOperator('');
             setFirstOperand('');
+        } else if (value === '.' && !display.includes('.')) {
+            // Se premi il punto decimale e non è già presente, lo aggiungiamo
+            setDisplay(display + value);
         } else {
-            // Altrimenti aggiungiamo i numeri al display
+            // Altrimenti aggiungiamo i numeri o gli operatori al display
             setDisplay(display + value);
         }
     };
@@ -60,6 +63,9 @@ export default function App() {
                     <CalculatorButton label="C" onPress={() => handlePress('C')} />
                     <CalculatorButton label="=" onPress={() => handlePress('=')} />
                     <CalculatorButton label="/" onPress={() => handlePress('/')} />
+                </View>
+                <View style={styles.row}>
+                    <CalculatorButton label="." onPress={() => handlePress('.')} /> {/* Punto decimale */}
                 </View>
             </View>
         </SafeAreaView>
