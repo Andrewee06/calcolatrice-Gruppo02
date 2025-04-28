@@ -1,35 +1,30 @@
-import React from 'react';
+ï»¿import React from 'react';
 import { StyleSheet, View, SafeAreaView, Text } from 'react-native';
-import CalculatorButton from './components/Button'; // Import del componente
+import CalculatorButton from './components/Button';
 
 export default function App() {
     const [display, setDisplay] = React.useState('');
     const [operator, setOperator] = React.useState('');
     const [firstOperand, setFirstOperand] = React.useState('');
+    const [memory, setMemory] = React.useState(0); // ðŸ‘ˆ AGGIUNTA variabile di memoria
 
-    // Funzione per gestire i numeri e le operazioni
     const handlePress = (value) => {
-        // Se il valore è un operatore, salviamo il primo operando e l'operatore
         if (['+', '-', '*', '/'].includes(value)) {
             setOperator(value);
             setFirstOperand(display);
             setDisplay('');
         } else if (value === '=') {
-            // Se premi il pulsante "=" calcola il risultato
-            const result = eval(firstOperand + operator + display); // Usa eval per il calcolo
+            const result = eval(firstOperand + operator + display);
             setDisplay(result.toString());
             setOperator('');
             setFirstOperand('');
         } else if (value === 'C') {
-            // Se premi "C", resettiamo il display
             setDisplay('');
             setOperator('');
             setFirstOperand('');
         } else if (value === '.' && !display.includes('.')) {
-            // Se premi il punto decimale e non è già presente, lo aggiungiamo
             setDisplay(display + value);
         } else {
-            // Altrimenti aggiungiamo i numeri o gli operatori al display
             setDisplay(display + value);
         }
     };
@@ -40,6 +35,12 @@ export default function App() {
                 <Text style={styles.displayText}>{display}</Text>
             </View>
             <View style={styles.buttons}>
+                <View style={styles.row}>
+                    <CalculatorButton label="C" onPress={() => handlePress('C')} />
+                    <CalculatorButton label="M+" onPress={() => { }} />
+                    <CalculatorButton label="M-" onPress={() => { }} />
+                    <CalculatorButton label="RM" onPress={() => { }} />
+                </View>
                 <View style={styles.row}>
                     <CalculatorButton label="1" onPress={() => handlePress('1')} />
                     <CalculatorButton label="2" onPress={() => handlePress('2')} />
@@ -60,12 +61,9 @@ export default function App() {
                 </View>
                 <View style={styles.row}>
                     <CalculatorButton label="0" onPress={() => handlePress('0')} />
-                    <CalculatorButton label="C" onPress={() => handlePress('C')} />
+                    <CalculatorButton label="." onPress={() => handlePress('.')} />
                     <CalculatorButton label="=" onPress={() => handlePress('=')} />
                     <CalculatorButton label="/" onPress={() => handlePress('/')} />
-                </View>
-                <View style={styles.row}>
-                    <CalculatorButton label="." onPress={() => handlePress('.')} /> {/* Punto decimale */}
                 </View>
             </View>
         </SafeAreaView>
